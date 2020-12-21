@@ -2,6 +2,9 @@
   "name": "typescript-trial",
   "version": "1.0.0",
   "description": "TypeScript 써보기",
+  "scripts": {
+    "start": "webpack-dev-server --config build/webpack.dev.js"
+  },
   "repository": "https://github.com/ony3000/typescript-trial.git",
   "author": "Hyeonjong <nianelo4@gmail.com>",
   "dependencies": {
