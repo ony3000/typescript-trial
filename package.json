@@ -3,5 +3,22 @@
   "version": "1.0.0",
   "description": "TypeScript 써보기",
   "repository": "https://github.com/ony3000/typescript-trial.git",
-  "author": "Hyeonjong <nianelo4@gmail.com>"
+  "author": "Hyeonjong <nianelo4@gmail.com>",
+  "dependencies": {
+    "core-js": "^3.8.1",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.12.7",
+    "babel-loader": "^8.2.2",
+    "html-webpack-plugin": "^4.5.0",
+    "ts-loader": "^8.0.12",
+    "typescript": "^4.1.3",
+    "webpack": "^4",
+    "webpack-cli": "^3",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4"
+  }
 }
