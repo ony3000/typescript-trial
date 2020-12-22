@@ -1,95 +1,202 @@
-//-------- boolean --------//
-let isDone: boolean = false;
+console.group('Basic Types');
 
-//-------- number --------//
-let decimal: number = 6;
-let hex: number = 0xf00d;
-let binary: number = 0b1010;
-let octal: number = 0o744;
-let big: bigint = 100n;
+console.group('Boolean');
+{
+  let isDone: boolean = false;
 
-//-------- string --------//
-let color: string = 'blue';
-color = 'red';
+  console.log(isDone);
+}
+console.groupEnd();
 
-let fullName: string = `Bob Bobbington`;
-let age: number = 37;
-let sentence: string = `Hello, my name is ${fullName}.
+console.group('Number');
+{
+  let decimal: number = 6;
+  let hex: number = 0xf00d;
+  let binary: number = 0b1010;
+  let octal: number = 0o744;
+  let big: bigint = 100n;
+
+  console.log(decimal);
+  console.log(hex);
+  console.log(binary);
+  console.log(octal);
+  console.log(big);
+}
+console.groupEnd();
+
+console.group('String');
+{
+  let color: string = 'blue';
+  color = 'red';
+
+  let fullName: string = `Bob Bobbington`;
+  let age: number = 37;
+  let sentence: string = `Hello, my name is ${fullName}.
 
 I'll be ${age + 1} years old next month.`;
 
-//-------- array --------//
-let list: number[] = [1, 2, 3];
-let anotherList: Array<number> = [1, 2, 3];
+  let anotherSentence: string =
+    "Hello, my name is " +
+    fullName +
+    ".\n\n" +
+    "I'll be " +
+    (age + 1) +
+    " years old next month.";
 
-//-------- tuple --------//
-let x: [string, number]; // Declare a tuple type
-x = ['hello', 10];
+  console.log(color);
+  console.log(sentence);
+  console.log(anotherSentence);
+}
+console.groupEnd();
 
-//-------- enum --------//
-enum Color {
-  Red = 1,
-  Green,
-  Blue,
-};
-let c: Color = Color.Green;
-let colorName: string = Color[2];
-console.log(colorName);
+console.group('Array');
+{
+  let list: number[] = [1, 2, 3];
+  let anotherList: Array<number> = [1, 2, 3];
 
-//-------- unknown --------//
-let notSure: unknown = 4;
-notSure = 'maybe a string instead';
-notSure = false;
+  console.log(list);
+  console.log(anotherList);
+}
+console.groupEnd();
 
+console.group('Tuple');
+{
+  // Declare a tuple type
+  let x: [string, number];
+
+  x = ['hello', 10]; // OK
+  // x = [10, 'hello']; // Error
+  console.log(x);
+}
+console.groupEnd();
+
+console.group('Enum');
+{
+  enum Color {
+    // By default, enums begin numbering their members starting at 0.
+    // You can change this by manually setting the value of one of its members.
+    Red = 1,
+    Green,
+    Blue,
+  };
+  let c: Color = Color.Green;
+  let colorName: string = Color[2];
+
+  console.log(Color);
+  console.log(c);
+  console.log(colorName);
+}
+console.groupEnd();
+
+console.group('Unknown');
 declare const maybe: unknown;
-if (notSure === true) {
-  // TypeScript knows that 'notSure' is a boolean here
-}
-if (typeof notSure === 'string') {
-  // TypeScript knows that 'notSure' is a string here
-}
+// const aNumber: number = maybe; // Error
 
-//-------- any --------//
+{
+  let notSure: unknown = 4;
+  notSure = 'maybe a string instead';
+  notSure = false;
+
+  if (notSure === true) {
+    // TypeScript knows that 'notSure' is a boolean here
+
+    const aBoolean: boolean = notSure;
+    // const aString: string = notSure; // Error
+  }
+  if (typeof notSure === 'string') {
+    // TypeScript knows that 'notSure' is a string here
+
+    const aString: string = notSure;
+    // const aBoolean: boolean = notSure; // Error
+  }
+
+  console.log(notSure);
+}
+console.groupEnd();
+
+console.group('Any');
 declare function getValue(key: string): any;
-// const str: string = getValue('myString'); // return value of 'getValue' is not checked
 
-let looselyTyped: any = 4;
-looselyTyped.toFixed(); // compiler doesn't check for the existence of the property
+// OK, return value of 'getValue' is not checked
+// const str: string = getValue('myString');
 
-//-------- void --------//
-function warnUser(): void {
-  console.log('This is my warning message');
+{
+  let looselyTyped: any = 4;
+  // looselyTyped.ifItExists(); // Runtime Error: compiler doesn't check for the existence of the property
+  looselyTyped.toFixed();
+
+  let anotherLooselyTyped: any = {};
+  let d = anotherLooselyTyped.a?.b?.c?.d; // type propagation: 'd' is also 'any' type
+
+  console.log(looselyTyped);
+  console.log(d);
 }
+console.groupEnd();
 
-//-------- null and undefined --------//
-let u: undefined = undefined;
-let n: null = null;
+console.group('Void');
+{
+  function warnUser(): void {
+    console.log('This is my warning message');
+  }
 
-//-------- never --------//
-// Function returning never must not have a reachable end point
-function error(message: string): never {
-  throw new Error(message);
+  console.log(warnUser);
 }
+console.groupEnd();
 
-// Inferred return type is never
-function fail() {
-  return error('Something failed');
+console.group('Null and Undefined');
+{
+  let u: undefined = undefined;
+  let n: null = null;
+
+  console.log(u);
+  console.log(n);
 }
+console.groupEnd();
 
-// Function returning never must not have a reachable end point
-function infiniteLoop(): never {
-  while (true) {}
+console.group('Never');
+{
+  // Function returning never must not have a reachable end point
+  function error(message: string): never {
+    throw new Error(message);
+  }
+
+  // Inferred return type is never
+  function fail() {
+    return error('Something failed');
+  }
+
+  // Function returning never must not have a reachable end point
+  function infiniteLoop(): never {
+    while (true) {}
+  }
+
+  console.log(error);
+  console.log(fail);
+  console.log(infiniteLoop);
 }
+console.groupEnd();
 
-//-------- object --------//
+console.group('Object');
 declare function create(o: object | null): void;
 
-// create({ prop: 0 }); // OK
-// create(null); // OK
+{
+  // create({ prop: 0 }); // OK
+  // create(null); // OK
+}
+console.groupEnd();
 
-//-------- type assertions --------//
-let someValue: unknown = 'this is a string';
+console.group('Type assertions');
+{
+  let someValue: unknown = 'this is a string';
 
-// The two samples are equivalent. Using one over the other is mostly a choice of preference; however, when using TypeScript with JSX, only as-style assertions are allowed.
-let strLength: number = (someValue as string).length;
-let anotherStrLength: number = (<string>someValue).length;
+  // The two samples are equivalent. Using one over the other is mostly a choice of preference; however, when using TypeScript with JSX, only as-style assertions are allowed.
+  let strLength: number = (someValue as string).length;
+  let anotherStrLength: number = (<string>someValue).length;
+
+  console.log(someValue);
+  console.log(strLength);
+  console.log(anotherStrLength);
+}
+console.groupEnd();
+
+console.groupEnd();
